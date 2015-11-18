@@ -1,0 +1,9 @@
+- hosts: localhost
+  tasks:
+    - name: Collect current app facts
+      ynh_app: name="{{ app_name }}"
+      sudo: yes
+    - include: "{{ app_pkg_path }}/ansible/roles/{{ operation }}.yml"
+
+  handlers:
+    - include: "{{ app_pkg_path}}/ansible/handlers.yml"
