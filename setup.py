@@ -12,5 +12,10 @@ setup(
             'ynh_ansible_operation = ansible_ynh.helper:main'
         ],
     },
-    eager_resources=['playbooks']
+    data_files=[
+        ('/usr/share/ansible-yunohost/playbooks/',
+         ['playbooks/ynh-app-operation.yml']),
+        ('/usr/share/ansible-yunohost/playbooks/library/',
+         ['playbooks/library/ynh_app'])
+    ],
 )

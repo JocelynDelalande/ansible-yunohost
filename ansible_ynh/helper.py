@@ -2,15 +2,11 @@ import argparse
 import sys
 import os
 import subprocess
-from pkg_resources import Requirement, resource_filename
 
 """YunoHost helper to run ansible roles"""
 
 
-def get_playbook_filename():
-    return os.path.join(
-        resource_filename(Requirement.parse("ansible-yunohost"), "playbooks"),
-        'ynh-app-operation.yml')
+PLAYBOOK_PATH = '/usr/share/ansible-yunohost/playbooks/ynh-app-operation.yml'
 
 
 def parse_args():
@@ -30,9 +26,11 @@ def main():
         '-i', 'localhost,', '-c', 'local',
         '-e', 'app_name={} app_pkg_path={} operation={}'.format(
             args.app_name, os.getcwd(), args.operation),
-        '-e', args.vars,
-        get_playbook_filename()
+        PLAYBOOK_PATH
     ]
+    if args.vars is not None:
+        cmd += ['-e', args.vars]
+
     subprocess.check_call(cmd, stdout=sys.stdout, stderr=sys.stderr)
 
 
