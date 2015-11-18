@@ -1,8 +1,13 @@
 - hosts: localhost
   tasks:
+    - name: Update APT cache
+      apt: update_cache=yes cache_valid_time=180
+      sudo: yes
+
     - name: Collect current app facts
       ynh_app: name="{{ app_name }}"
       sudo: yes
+
     - include: "{{ app_pkg_path }}/ansible/roles/{{ operation }}.yml"
 
   handlers:
